@@ -6,9 +6,13 @@ module.exports = async (req, res, next) => {
 
   try {
 
-    if (!req.headers.authorization) { _authError() }
+    // if (!req.headers.authorization) { _authError() }
 
-    const token = req.headers.authorization.split(' ').pop();
+    // const token = req.headers.authorization.split(' ').pop();
+    console.log('bearer',req.cookies.token)
+    if (!req.cookies.token) { _authError() }
+
+    const token = req.cookies.token
     const validUser = await users.authenticateWithToken(token);
 
     req.user = validUser;

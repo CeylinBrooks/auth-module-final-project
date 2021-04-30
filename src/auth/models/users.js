@@ -32,6 +32,13 @@ users.virtual("capabilities").get(function () {
   return acl[this.role];
 });
 
+
+users.pre('save', async function () {
+  if (this.isModified('password')) {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
+});
+
 users.statics.authenticateBasic = async function (username, password) {
   const user = await this.findOne({ username });
   const valid = await bcrypt.compare(password, user.password);

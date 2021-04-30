@@ -15,6 +15,7 @@ authRouter.post('/signup', async (req, res, next) => {
       user: userRecord,
       token: userRecord.token
     };
+    res.cookie('token',output.token)
     res.status(201).json(output.user);
   } catch (e) {
     next(e.message)
@@ -26,7 +27,15 @@ authRouter.post('/signin', basicAuth, (req, res, next) => {
     user: req.user,
     token: req.user.token
   };
-  res.status(200).json(user);
+  console.log("signin route",user)
+  res.cookie('token',user.token)
+  res.status(200).json(user.user);
 });
+
+// test if cookie is getting sent thu req.cookies
+authRouter.get('/cookies',(req,res)=>{
+  let x = req.cookies
+  res.status(200).send(x)
+})
 
 module.exports = authRouter;

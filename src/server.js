@@ -4,6 +4,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser')
 
 // Esoteric Resources
 const errorHandler = require('./error-handlers/500.js');
@@ -17,6 +18,7 @@ const app = express();
 // App Level MW
 app.use(cors());
 app.use(morgan('dev'));
+app.use(cookieParser())
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
