@@ -26,7 +26,7 @@ app.use(authRoutes);
 app.use('/api/v1', v1Routes);
 
 // Catchalls
-app.use(notFound);
+app.use('*', notFound);
 app.use(errorHandler);
 
 module.exports = {
