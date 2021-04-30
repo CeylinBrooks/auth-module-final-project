@@ -8,13 +8,14 @@ const basicAuth = require('./middleware/basic.js')
 
 authRouter.post('/signup', async (req, res, next) => {
   try {
+    console.log('its getting interesting==============', req.body);
     let user = new User(req.body);
     const userRecord = await user.save();
     const output = {
       user: userRecord,
       token: userRecord.token
     };
-    res.status(201).json(output);
+    res.status(201).json(output.user);
   } catch (e) {
     next(e.message)
   }
