@@ -30,6 +30,7 @@ authRouter.post("/signin", basicAuth, (req, res, next) => {
   console.log("signin route", user);
   res.cookie("token", user.token);
   res.status(200).json(user.user);
+  //res.redirect(user.token);
 });
 
 // test if cookie is getting sent thu req.cookies
