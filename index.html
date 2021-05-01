@@ -6,21 +6,22 @@
   <title>Boasting About Books!</title>
 </head>
 <body>
-  <form action="http://localhost:3000/signup" method="POST">
+  <form action="http://localhost:3000/signup" id = "signup" method="POST">
   <label for="username">User name:</label><br>
   <input type="text" id="username" name="username" value="test_user"><br>
   <label for="password">Password:</label><br>
   <input type="password" id="password" name="password" value="12345"><br>
-  <input type="submit" value="Submit">
+  <button type="submit" value="Submit"></button>
 </form>
   
-<form action="http://localhost:3000/signin" method="POST">
-  <label for="username">Create username:</label><br>
-  <input type="text" id="username" name="username" value="test_user"><br>
-  <label for="password"> Create Password:</label><br>
-  <input type="password" id="password" name="password" value="12345"><br>
-  <input type="submit" value="Submit">
+<form action="" id = "signin" method="">
+  <label for="username1">Login username:</label><br>
+  <input type="text" id="username1" name="username" value="test_user"><br>
+  <label for="password1"> Login Password:</label><br>
+  <input type="password" id="password1" name="password" value="12345"><br>
+  <button type="submit" value="Submit"></button>
 </form>
-
+<script src="./pages/signinpage.js"></script>
 </body>
+
 </html>
