@@ -11,6 +11,7 @@ const errorHandler = require('./error-handlers/500.js');
 const notFound = require('./error-handlers/404.js');
 const authRoutes = require('./auth/routes.js');
 const v1Routes = require('./routes/v1.js')
+const methodOverride = require('method-override');
 
 // Prepare the express app
 const app = express();
@@ -22,6 +23,11 @@ app.use(cookieParser())
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(__dirname + '/public'));
+app.use(methodOverride('_method'));
+
+// Set the view engine for server-side templating
+app.set('view engine', 'ejs');
 
 // Routes
 app.use(authRoutes);

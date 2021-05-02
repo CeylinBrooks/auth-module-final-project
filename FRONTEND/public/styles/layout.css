@@ -1,0 +1,35 @@
+h1 {
+}
+
+#centerForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  /* height: 100vh; */
+  background-color: rgba(75, 73, 72, 0.378);
+}
+
+h2 {
+  font-size: 36px;
+  background-color: black;
+  width: 100%;
+  color: white;
+  text-align: left;
+  padding: 24px;
+}
+
+h3 {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 24px;
+  background-color: #555;
+  text-align: center;
+  width: 100%;
+  padding: 24px 0;
+  color: white;
+}
+
+/* this is where the display of search results starts */
+
+#searchResultsDiv p.description {
+}
