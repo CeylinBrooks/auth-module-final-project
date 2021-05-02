@@ -34,8 +34,7 @@ authRouter.post("/signin", basicAuth, (req, res, next) => {
     user: req.user,
     token: req.user.token,
   };
-  // res.status(200).json(user);
-  // console.log("signin route",user)
+
   res.cookie("token", user.token);
   res.status(200).json(user.user);
 });
@@ -46,8 +45,16 @@ authRouter.get("/cookies", (req, res) => {
   res.status(200).send(x);
 });
 
-authRouter.get('/users', bearerAuth, permissions('read'), async (req, res, next) => {
-    //console.log(“DID FIND”);
+authRouter.get('/user', bearerAuth, async (req, res, next) => {
+
+  const user = await User.find({_id:req.user._id});
+  res.status(200).json(user);
+}
+);
+
+
+authRouter.get('/users', bearerAuth, permissions('delete'), async (req, res, next) => {
+
     const users = await User.find({});
     const list = users.map((user) => user.username);
     res.status(200).json(list);
