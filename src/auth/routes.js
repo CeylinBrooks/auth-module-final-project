@@ -3,10 +3,16 @@
 const express = require("express");
 const authRouter = express.Router();
 
-const User = require("./models/users.js");
-const basicAuth = require("./middleware/basic.js");
+const User = require('./models/users.js');
+const basicAuth = require('./middleware/basic.js');
+const bearerAuth = require('./middleware/bearer.js');
+const permissions = require('./middleware/acl.js');
+
+
 
 authRouter.post("/signup", async (req, res, next) => {
+    console.log('THIS IS THE SERVER SIDE OBJECT', req.body);
+
   try {
     console.log("its getting interesting==============", req.body);
     let user = new User(req.body);
@@ -22,15 +28,16 @@ authRouter.post("/signup", async (req, res, next) => {
   }
 });
 
+
 authRouter.post("/signin", basicAuth, (req, res, next) => {
   const user = {
     user: req.user,
     token: req.user.token,
   };
-  console.log("signin route", user);
+  // res.status(200).json(user);
+  // console.log("signin route",user)
   res.cookie("token", user.token);
   res.status(200).json(user.user);
-  //res.redirect(user.token);
 });
 
 // test if cookie is getting sent thu req.cookies
@@ -38,5 +45,13 @@ authRouter.get("/cookies", (req, res) => {
   let x = req.cookies;
   res.status(200).send(x);
 });
+
+authRouter.get('/users', bearerAuth, permissions('read'), async (req, res, next) => {
+    //console.log(“DID FIND”);
+    const users = await User.find({});
+    const list = users.map((user) => user.username);
+    res.status(200).json(list);
+  }
+);
 
 module.exports = authRouter;

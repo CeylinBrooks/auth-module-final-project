@@ -4,14 +4,13 @@ const base64 = require("base-64");
 const User = require("../models/users.js");
 
 module.exports = async (req, res, next) => {
-  console.log("REACHED MIDDLEWARE");
-  if (!req.headers.authorization) {
-    return _authError();
-  }
+  console.log('THIS IS THE MIDDLEWARE', req.headers.authorization);
 
-  let basic = req.headers.authorization.split(" ").pop();
-  let [user, pass] = base64.decode(basic).split(":");
-  console.log(user, pass);
+  if (!req.headers.authorization) { return _authError(); }
+
+  let basic = req.headers.authorization.split(' ').pop();
+  let [user, pass] = base64.decode(basic).split(':');
+  console.log('THIS IS BASIC ===================================================', basic, [user, pass]);
   try {
     req.user = await User.authenticateBasic(user, pass);
     next();

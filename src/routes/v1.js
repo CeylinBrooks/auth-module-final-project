@@ -5,9 +5,9 @@ const express = require('express');
 const Collection = require('../models/data-collection.js');
 
 // add permissions,bearerAuth, basicAuth
-const basicAuth = require("../auth/middleware/basic.js");
-const bearerAuth = require("../auth/middleware/bearer.js");
-const permissions = require("../auth/middleware/acl.js");
+const basicAuth = require('../auth/middleware/basic.js');
+const bearerAuth = require('../auth/middleware/bearer.js');
+const permissions = require('../auth/middleware/acl.js');
 
 const router = express.Router();
 
@@ -27,17 +27,17 @@ router.param('model', (req, res, next) => {
       next();
     }
     else {
-      next("Invalid Model");
+      next('Invalid Model');
     }
   }
 });
 
 // Add Authentication
-router.get("/:model", basicAuth, handleGetAll);
-router.get("/:model/:id", basicAuth, handleGetOne);
-router.post("/:model", bearerAuth, permissions("create"), handleCreate);
-router.put("/:model/:id", bearerAuth, permissions("update"), handleUpdate);
-router.delete("/:model/:id", bearerAuth, permissions("delete"), handleDelete);
+router.get('/:model', basicAuth, handleGetAll);
+router.get('/:model/:id', basicAuth, handleGetOne);
+router.post('/:model', bearerAuth, permissions('create'), handleCreate);
+router.put('/:model/:id', bearerAuth, permissions('update'), handleUpdate);
+router.delete('/:model/:id', bearerAuth, permissions('delete'), handleDelete);
 
 async function handleGetAll(req, res) {
   let allRecords = await req.model.get();

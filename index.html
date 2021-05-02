@@ -4,24 +4,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Boasting About Books!</title>
+  <!-- <script src="frontend.js"></script> -->
 </head>
 <body>
-  <form action="http://localhost:3000/signup" id = "signup" method="POST">
+  <!-- <form action="http://localhost:3000/signup" method="POST">
   <label for="username">User name:</label><br>
   <input type="text" id="username" name="username" value="test_user"><br>
   <label for="password">Password:</label><br>
   <input type="password" id="password" name="password" value="12345"><br>
-  <button type="submit" value="Submit"></button>
-</form>
-  
-<form action="" id = "signin" method="">
-  <label for="username1">Login username:</label><br>
-  <input type="text" id="username1" name="username" value="test_user"><br>
-  <label for="password1"> Login Password:</label><br>
-  <input type="password" id="password1" name="password" value="12345"><br>
-  <button type="submit" value="Submit"></button>
-</form>
-<script src="./pages/signinpage.js"></script>
-</body>
+  <input type="submit" value="Submit">
+</form> -->
 
+<form action="" method="POST" id="signin">
+  <label for="username">Login username:</label><br>
+  <input type="text" id="username1" name="username" value="test_user"><br>
+  <label for="password"> Login Password:</label><br>
+  <input type="password" id="password1" name="password" value="12345"><br>
+  <button type="submit" >Submit</button>
+</form>
+<script>
+console.log('we are here !!!!');
+var signinEl = document.getElementById('signin');
+
+signinEl.addEventListener('submit', (e) => {
+  e.preventDefault();
+  let un = e.target.username.value;
+  let pw = e.target.password.value;
+  let strg = `Basic ${un}:${pw}`
+  let encoded = btoa(strg);
+  console.log(encoded);
+  console.log(atob(encoded));
+
+});
+
+</script>
+
+</body>
 </html>
