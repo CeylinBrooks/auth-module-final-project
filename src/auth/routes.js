@@ -38,11 +38,13 @@ authRouter.post('/signin/new', (req, res) => {
 
 
 authRouter.post("/signin", basicAuth, (req, res, next) => {
-    const user = {
-      user: req.user,
-      token: req.user.token,
-    };
-  res.cookie('token', user.token);
+
+  const user = {
+    user: req.user,
+    token: req.user.token,
+  };
+
+  res.cookie("token", user.token);
   res.status(200).json(user.user);
 });
 
@@ -52,8 +54,9 @@ authRouter.get('/cookies',(req,res)=>{
   res.status(200).send(x);
 })
 
-authRouter.get('/users', bearerAuth, permissions('read'), async (req, res) => {
-    //console.log(“DID FIND”);
+
+authRouter.get('/users', bearerAuth, permissions('delete'), async (req, res, next) => {
+
     const users = await User.find({});
     const list = users.map((user) => user.username);
     res.status(200).json(list);

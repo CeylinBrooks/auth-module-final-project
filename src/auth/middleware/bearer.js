@@ -16,7 +16,7 @@ module.exports = async (req, res, next) => {
     next();
 
   } catch (e) {
-    _authError();
+    res.status(403).send('Invalid Login');;
   }
 
   function _authError() {
