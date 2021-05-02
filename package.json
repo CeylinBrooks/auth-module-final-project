@@ -31,6 +31,7 @@
     "jsonwebtoken": "^8.5.1",
     "live-server": "^1.2.1",
     "mongoose": "^5.12.7",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "superagent": "^6.1.0"
   }
 }
