@@ -1,10 +1,11 @@
 "use strict";
 const base64 = require("base-64");
-require("axios");
 require("superagent");
+require("ejs");
+require("ajax");
 let signinEL = document.getElementById("signin");
 console.log("FILE REACHED");
-let signupEL = document.getElementById("signup");
+//let signupEL = document.getElementById("signup");
 
 signinEL.addEventListener("submit", (e) => signInHandler(e));
 
