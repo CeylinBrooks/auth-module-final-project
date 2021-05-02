@@ -4,6 +4,7 @@ const express = require('express');
 const superagent = require('superagent');
 const cors = require('cors');
 
+
 const pg = require('pg');
 
 const methodOverride = require('method-override');
@@ -15,7 +16,6 @@ const base64 = require('base-64');
 const DATABASE_URL = process.env.DATABASE_URL;
 const client = new pg.Client(DATABASE_URL);
 client.on('error', error => console.log('There was an error like dudh', error));
-
 // Application Setup
 const app = express();
 const PORT = process.env.PORT || 3232;
@@ -46,12 +46,6 @@ app.get('/signIn/new', (req, res) => {
   res.render('pages/credentials/signin.ejs');
 });
 app.post('/signIn', handlesignIn);
-
-// app.get('/users', (req, res) => {
-//   res.render('pages/credentials/deleteUsers.ejs');
-// });
-// app.delete('/users/:id', frontendMiddlewareFunction, handleDeleteUser);
-
 // ========================================================
 
 app.get('/', getBooksSql);
@@ -63,8 +57,7 @@ app.post('/books', saveSingleBook);
 app.get('/books/:id', getSingleBook);
 
 app.put('/update/:id', updateBookInfo);
-// app.delete('/books/:id', MIDDLEWARE FUNCTION HERE TO CHECK ROLE , deleteBook);
-app.delete('/books/:id', frontendMiddlewareFunction('admin'), deleteBook);
+app.delete('/books/:id', deleteBook);
 
 app.get('/books/detail-view/:id', redirectToUpdateBook);
 
@@ -94,14 +87,14 @@ function handlesignIn(req, res) {
   // console.log(base64.decode(encoded));
   // req.headers.authorization = encoded;
   let url = `http://localhost:3333/signin`;
+  // superagent.post(url, req)
   superagent.post(url)
   .set('authorization', `Basic ${encoded}`)
   // .set('authorization', `bearer ${YELP_API_KEY}`)
     .then(data => {
       console.log(data.body);
-      tokenArray.pop();
       tokenArray.push({ username: data.body.username, token: data.body.token, role: data.body.role});
-      console.log('here is the token Array - HURRAY HURRAY', tokenArray);
+      console.log('heree is the token Array - HURRAY HURRAY', tokenArray);
       const userDataThatComesBack = data.body;
       res.render('pages/credentials/showUsers.ejs', {userDataThatComesBack});
     })
@@ -111,26 +104,6 @@ function handlesignIn(req, res) {
     });
 }
 
-function frontendMiddlewareFunction (role) {
-  return (req, res, next) => {
-    try {
-      // check if token is there, check if token is the same as the one we need
-      // console.log('HAHA SO YOU ARE A ===============================', tokenArray);
-      console.log('HAHA SO YOU ARE A ===============================', req.header);
-      if(tokenArray.length === 0) {
-        next('Please sign in first');
-      } else if(tokenArray[0].role === role){
-        next();
-      } else {
-        next('Insufficient access credentials for this operation - please contact the admin');
-      }
-    } catch(e) {
-      next(e.message);
-    }
-  };
-}
-
-// ==========================================================================
 function redirectToUpdateBook(req, res) {
   // res.render('pages/books/detail-new.ejs');
   const sqlString = 'SELECT * FROM book_table WHERE id = $1;';

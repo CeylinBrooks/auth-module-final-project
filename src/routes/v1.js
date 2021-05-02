@@ -41,7 +41,9 @@ router.delete('/:model/:id', bearerAuth, permissions('delete'), handleDelete);
 
 async function handleGetAll(req, res) {
   let allRecords = await req.model.get();
-  res.status(200).json(allRecords);
+  const booksObject = { bookSearchArray: allRecords};
+  res.render('./pages/index.ejs', booksObject);
+  // res.status(200).json(allRecords);
 }
 
 async function handleGetOne(req, res) {
